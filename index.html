@@ -1,0 +1,386 @@
+<title>MBE Brochure Rack</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=Figtree:wght@400;500;600&display=swap">
+<style>
+/* Layout: a store-front brochure wall — one horizontal shelf per trip type, covers standing on a black ledge */
+:root{
+  --bg:#ffffff; --fg:#141414; --muted:#5d5656; --line:#e6e0e0;
+  --red:#c8102e; --red-ink:#a50d26; --paper:#f7f4f4; --wall:#f6f3f3;
+  --ledge:#141414; --ledge-edge:#3a3a3a;
+  --display:"Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
+  --body:"Figtree", "Segoe UI", Arial, sans-serif;
+  --cover-h:210px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#121111; --fg:#f4f1f1; --muted:#b3abab; --line:#2c2828; --paper:#1d1b1b; --wall:#1a1818;
+  --red:#e2283f; --red-ink:#ff6b7c; --ledge:#000; --ledge-edge:#4a4545; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121111; --fg:#f4f1f1; --muted:#b3abab; --line:#2c2828; --paper:#1d1b1b; --wall:#1a1818;
+  --red:#e2283f; --red-ink:#ff6b7c; --ledge:#000; --ledge-edge:#4a4545; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.5}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 48px}
+
+header.top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:20px;border-bottom:3px solid var(--fg);padding-bottom:18px}
+.eyebrow{font-family:var(--display);font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--red-ink);font-size:15px;margin:0}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(40px,7vw,72px);line-height:.92;margin:4px 0 0;text-transform:uppercase;letter-spacing:.01em;text-wrap:balance}
+.intro{max-width:54ch;color:var(--muted);margin:10px 0 0}
+.quote{display:inline-flex;align-items:center;gap:8px;background:var(--red);color:#fff;text-decoration:none;font-weight:600;padding:12px 20px;border-radius:2px;white-space:nowrap}
+.quote:hover{background:var(--red-ink)} .quote:focus-visible{outline:3px solid var(--fg);outline-offset:2px}
+
+.controls{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin:22px 0 6px}
+.tabs{display:flex;flex-wrap:wrap;gap:6px}
+.tab{font:inherit;font-weight:600;font-size:14px;border:1.5px solid var(--fg);background:transparent;color:var(--fg);padding:7px 14px;border-radius:99px;cursor:pointer}
+.tab[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
+.tab:focus-visible,.search input:focus-visible,.arrows button:focus-visible{outline:3px solid var(--red);outline-offset:2px}
+.search{position:relative;flex:1 1 220px;max-width:320px}
+.search input{width:100%;font:inherit;padding:9px 12px 9px 36px;border:1.5px solid var(--line);background:var(--paper);color:var(--fg);border-radius:99px}
+.search svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;stroke:var(--muted)}
+
+.shelf{margin-top:36px}
+.shelf-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.shelf-head h2{font-family:var(--display);font-weight:800;text-transform:uppercase;font-size:30px;letter-spacing:.02em;margin:0;line-height:1}
+.shelf-head h2 span{color:var(--red-ink)}
+.head-right{display:flex;gap:14px;align-items:center}
+.count{color:var(--muted);font-size:13px;font-variant-numeric:tabular-nums}
+.arrows{display:flex;gap:6px}
+.arrows button{width:36px;height:36px;border-radius:50%;border:1.5px solid var(--line);background:var(--bg);color:var(--fg);cursor:pointer;font-size:18px;line-height:1}
+.arrows button:hover{border-color:var(--fg)}
+
+.track{display:flex;overflow-x:auto;scroll-snap-type:x proximity;margin-top:10px;background:linear-gradient(var(--wall),var(--wall)) top/100% calc(var(--cover-h) + 22px) no-repeat;scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+.track::-webkit-scrollbar{height:6px}.track::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px}
+.slot{flex:0 0 auto;width:min-content;display:flex;flex-direction:column;scroll-snap-align:start;text-decoration:none;color:inherit}
+.slot.fill{flex:1 0 24px;width:auto}
+.stand{height:calc(var(--cover-h) + 22px);display:flex;align-items:flex-end;padding:0 13px}
+.slot:first-child .stand{padding-left:20px}
+.ledge{height:14px;background:var(--ledge);border-top:3px solid var(--ledge-edge);box-shadow:0 10px 12px -8px rgba(0,0,0,.5)}
+.meta{padding:12px 13px 0}
+.slot:first-child .meta{padding-left:20px}
+
+.cover{height:var(--cover-h);display:block;position:relative;box-shadow:0 7px 12px -5px rgba(0,0,0,.45);transform-origin:bottom center;transition:transform .2s ease, box-shadow .2s ease;background:#ddd}
+.cover img{height:100%;width:auto;max-width:none;display:block}
+.slot:hover .cover{transform:translateY(-7px);box-shadow:0 16px 20px -8px rgba(0,0,0,.45)}
+.slot:focus-visible{outline:none}
+.slot:focus-visible .cover{outline:3px solid var(--red);outline-offset:3px}
+.cover::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,rgba(255,255,255,.14),transparent 28%);pointer-events:none}
+
+.ph{width:calc(var(--cover-h) * .75);display:flex;flex-direction:column;justify-content:space-between;padding:12px 11px;background:#141414;color:#fff}
+.ph .v{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase}
+.ph .t{font-family:var(--display);font-weight:800;text-transform:uppercase;font-size:26px;line-height:.95}
+.ph .b{font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;border-top:2px solid #c8102e;padding-top:6px}
+
+.meta .vn{font-size:11.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--red-ink)}
+.meta .tn{font-size:14px;font-weight:500;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.meta .fmt{font-size:12px;color:var(--muted);margin-top:2px}
+.empty{margin-top:40px;color:var(--muted)}
+.empty a{color:var(--red-ink)}
+
+footer{margin-top:48px;border-top:1px solid var(--line);padding-top:18px;display:flex;flex-wrap:wrap;gap:12px 24px;justify-content:space-between;align-items:center}
+footer p{margin:0;color:var(--muted);font-size:13px;max-width:62ch}
+.slogan{font-family:var(--display);font-weight:800;text-transform:uppercase;letter-spacing:.06em;font-size:22px}
+.slogan span{color:var(--red-ink)}
+@media (max-width:560px){:root{--cover-h:170px}.arrows{display:none}.shelf-head h2{font-size:26px}}
+@media (prefers-reduced-motion:reduce){.cover{transition:none}.slot:hover .cover{transform:none}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div>
+      <p class="eyebrow">M B Excursions</p>
+      <h1>The Brochure Rack</h1>
+      <p class="intro">Browse brochures from the travel partners we book with. Tap a cover to open it. When something catches your eye, send us a quote request and we'll plan the rest.</p>
+    </div>
+    <a class="quote" href="https://form.jotform.com/231787302418053" target="_blank" rel="noopener">Request a Quote <span aria-hidden="true">→</span></a>
+  </header>
+
+  <div class="controls">
+    <div class="tabs" role="group" aria-label="Filter by trip type" id="tabs"></div>
+    <label class="search"><span hidden>Search brochures</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="q" type="search" placeholder="Search: Alaska, Europe, Egypt…" autocomplete="off">
+    </label>
+  </div>
+
+  <main id="shelves"></main>
+  <p class="empty" id="empty" hidden>No brochures match that search. Try a destination like “Europe” or “Alaska”, or <a href="https://www.mbexcursions.com/contactus" target="_blank" rel="noopener">ask us directly</a>.</p>
+
+  <footer>
+    <div class="slogan">Plan. Pack. <span>Vacay.</span> Repeat.</div>
+    <p>Brochures are published by each travel partner. Prices, itineraries and promotions change often, so contact us for current rates and availability.</p>
+  </footer>
+</div>
+
+<script>
+const COVERS={"Holland America|Canada & New England": "covers/holland-america-canada-new-england.jpg", "AAT Kings|Australia & New Zealand": "covers/aat-kings-australia-new-zealand.jpg", "Brendan Vacations|Ireland & Scotland": "covers/brendan-vacations-ireland-scotland.jpg", "Contiki|Contiki Worldwide": "covers/contiki-contiki-worldwide.jpg", "Costsaver|Worldwide 2026/2027": "covers/costsaver-worldwide-2026-2027.jpg", "Holland America|Caribbean": "covers/holland-america-caribbean.jpg", "Holland America|Europe": "covers/holland-america-europe.jpg", "Holland America|2027 Grand Voyages": "covers/holland-america-2027-grand-voyages.jpg", "Holland America|Asia": "covers/holland-america-asia.jpg", "Holland America|Hawaii & Panama Canal": "covers/holland-america-hawaii-panama-canal.jpg", "Holland America|South America & Antarctica": "covers/holland-america-south-america-antarctica.jpg", "Trafalgar|Europe & Britain 2027": "covers/trafalgar-europe-britain-2027.jpg", "Trafalgar|River Cruises": "covers/trafalgar-river-cruises.jpg", "Trafalgar|The Americas 2027/2028": "covers/trafalgar-the-americas-2027-2028.jpg", "Trafalgar|Worldwide Tours 2027/2028": "covers/trafalgar-worldwide-tours-2027-2028.jpg", "Uniworld|Land Extensions": "covers/uniworld-land-extensions.jpg", "Uniworld|Cruise & Rail": "covers/uniworld-cruise-rail.jpg", "Uniworld|Danube River Cruise Collection": "covers/uniworld-danube-river-cruise-collection.jpg", "Uniworld|Uncover the Heart of Egypt": "covers/uniworld-uncover-the-heart-of-egypt.jpg", "Uniworld|France: The Place to Be": "covers/uniworld-france-the-place-to-be.jpg", "Insight Vacations|The Americas 2027/2028": "covers/insight-vacations-the-americas-2027-2028.jpg", "Holland America|Alaska": "covers/holland-america-alaska.jpg", "Holland America|Unforgettable Journeys": "covers/holland-america-unforgettable-journeys.jpg", "Uniworld|Spectacular Journeys in India": "covers/uniworld-spectacular-journeys-in-india.jpg", "Cunard|Cunard": "covers/cunard-cunard.jpg", "Princess Cruises|Alaska": "covers/princess-cruises-alaska.jpg", "Insight Vacations|Europe, Britain & The World": "covers/insight-vacations-europe-britain-the-world.jpg", "Uniworld|Italy & The Veneto Region": "covers/uniworld-italy-the-veneto-region.jpg", "Holland America|Australia, New Zealand & The South Pacific": "covers/holland-america-australia-new-zealand-the-south-pacific.jpg", "Explora Journeys|Winter 2026–2027": "covers/explora-journeys-winter-20262027.jpg", "Explora Journeys|Festive Journeys 2026": "covers/explora-journeys-festive-journeys-2026.jpg", "Explora Journeys|Summer 2027": "covers/explora-journeys-summer-2027.jpg", "Explora Journeys|Winter 2027–2028": "covers/explora-journeys-winter-20272028.jpg", "Explora Journeys|Summer 2028": "covers/explora-journeys-summer-2028.jpg", "Explora Journeys|2029 World Journey": "covers/explora-journeys-2029-world-journey.jpg", "Explora Journeys|The Ocean State of Mind": "covers/explora-journeys-the-ocean-state-of-mind.jpg", "Azamara|Europe Destination Guide 2026–2027": "covers/azamara-europe-destination-guide-20262027.jpg", "Azamara|Europe Land Program Guide": "covers/azamara-europe-land-program-guide.jpg", "Azamara|Caribbean, North & South America Land Program Guide": "covers/azamara-caribbean-north-south-america-land-program-guide.jpg", "American Cruise Lines|American Cruise Collection 2027–2029": "covers/american-cruise-lines-american-cruise-collection-20272029.jpg", "Lindblad Expeditions|Explorations 2026–2028": "covers/lindblad-expeditions-explorations-20262028.jpg", "Lindblad Expeditions|Voyages of Discovery 2026–2028": "covers/lindblad-expeditions-voyages-of-discovery-20262028.jpg", "Lindblad Expeditions|Uncommon Voyages 2026–2028": "covers/lindblad-expeditions-uncommon-voyages-20262028.jpg", "Lindblad Expeditions|Alaska 2027–2028": "covers/lindblad-expeditions-alaska-20272028.jpg", "Lindblad Expeditions|Antarctica 2026–2028": "covers/lindblad-expeditions-antarctica-20262028.jpg", "Lindblad Expeditions|The Arctic 2026–2028": "covers/lindblad-expeditions-the-arctic-20262028.jpg", "Lindblad Expeditions|Iceland 2026–2027": "covers/lindblad-expeditions-iceland-20262027.jpg", "Lindblad Expeditions|Galápagos 2026–2028": "covers/lindblad-expeditions-galapagos-20262028.jpg", "Lindblad Expeditions|Central America & Colombia 2026–2028": "covers/lindblad-expeditions-central-america-colombia-20262028.jpg", "Lindblad Expeditions|Baja California & Channel Islands 2026–2027": "covers/lindblad-expeditions-baja-california-channel-islands-20262027.jpg", "Lindblad Expeditions|The Wild Pacific Coast 2026–2028": "covers/lindblad-expeditions-the-wild-pacific-coast-20262028.jpg", "Lindblad Expeditions|Europe 2026–2028": "covers/lindblad-expeditions-europe-20262028.jpg", "Lindblad Expeditions|The Mediterranean 2026–2027": "covers/lindblad-expeditions-the-mediterranean-20262027.jpg", "Lindblad Expeditions|River Cruises Reimagined 2026–2027": "covers/lindblad-expeditions-river-cruises-reimagined-20262027.jpg", "Abercrombie & Kent|A&K x Crystal Cruises 2027": "covers/abercrombie-kent-a-k-x-crystal-cruises-2027.jpg", "Abercrombie & Kent|Small Group Journeys 2027": "covers/abercrombie-kent-small-group-journeys-2027.jpg", "Abercrombie & Kent|Small Jet Journeys 2027": "covers/abercrombie-kent-small-jet-journeys-2027.jpg", "Abercrombie & Kent|Africa: Across a Continent by Private Jet 2027": "covers/abercrombie-kent-africa-across-a-continent-by-private-jet-2027.jpg", "Abercrombie & Kent|Epic Islands & Landscapes by Private Jet 2027": "covers/abercrombie-kent-epic-islands-landscapes-by-private-jet-2027.jpg", "Abercrombie & Kent|Wild Wonders by Private Jet 2027": "covers/abercrombie-kent-wild-wonders-by-private-jet-2027.jpg", "Abercrombie & Kent|Hidden Horizons by Private Jet 2027": "covers/abercrombie-kent-hidden-horizons-by-private-jet-2027.jpg", "African Travel|50 Years of Luxury Safaris 2027": "covers/african-travel-50-years-of-luxury-safaris-2027.jpg", "Amtrak Vacations|Rail Vacations USA & Canada 2027–2028": "covers/amtrak-vacations-rail-vacations-usa-canada-20272028.jpg", "Amtrak Vacations|Famous Routes 2027–2028": "covers/amtrak-vacations-famous-routes-20272028.jpg", "Amtrak Vacations|Cross-Country 2027–2028": "covers/amtrak-vacations-cross-country-20272028.jpg", "Amtrak Vacations|National Parks 2027–2028": "covers/amtrak-vacations-national-parks-20272028.jpg", "Amtrak Vacations|The Mighty 5 National Parks 2027–2028": "covers/amtrak-vacations-the-mighty-5-national-parks-20272028.jpg", "Amtrak Vacations|West Coast 2027–2028": "covers/amtrak-vacations-west-coast-20272028.jpg", "Amtrak Vacations|Pacific Northwest 2027–2028": "covers/amtrak-vacations-pacific-northwest-20272028.jpg", "Amtrak Vacations|Rail Experiences 2027–2028": "covers/amtrak-vacations-rail-experiences-20272028.jpg", "Amtrak Vacations|Aboard Amtrak 2027–2028": "covers/amtrak-vacations-aboard-amtrak-20272028.jpg", "Sandals Resorts|Caribbean Resorts for Adults": "covers/sandals-resorts-caribbean-resorts-for-adults.jpg", "Sandals & Beaches Resorts|Jamaica Destination Guide": "covers/sandals-beaches-resorts-jamaica-destination-guide.jpg", "Sandals & Beaches Resorts|Caribbean Destination Weddings 2026": "covers/sandals-beaches-resorts-caribbean-destination-weddings-2026.jpg", "Bahia Principe|The Art of Finding Your Own Flow": "covers/bahia-principe-the-art-of-finding-your-own-flow.jpg", "Carlisle Bay|Laidback Luxury in Antigua": "covers/carlisle-bay-laidback-luxury-in-antigua.jpg", "Carnival Cruise Line|Cruise Vacations": "covers/carnival-cruise-line-cruise-vacations.jpg", "CIE Tours|Ireland & Britain and Beyond 2027": "covers/cie-tours-ireland-britain-and-beyond-2027.jpg", "Celtic Tours|Ireland, United Kingdom & Europe 2027": "covers/celtic-tours-ireland-united-kingdom-europe-2027.jpg", "Classic Journeys|Walking Tours 2027": "covers/classic-journeys-walking-tours-2027.jpg", "Couples Resorts|Couples Negril Resort Directory": "covers/couples-resorts-couples-negril-resort-directory.jpg", "Couples Resorts|Couples Sans Souci Resort Directory": "covers/couples-resorts-couples-sans-souci-resort-directory.jpg", "Couples Resorts|Couples Tower Isle Resort Directory": "covers/couples-resorts-couples-tower-isle-resort-directory.jpg", "Globus|Worldwide Travel Planner 2026 & 2027": "covers/globus-worldwide-travel-planner-2026-2027.jpg", "The Travel Corporation|Worldwide Tours for Any and Everyone 2025/2026": "covers/the-travel-corporation-worldwide-tours-for-any-and-everyone-2025-2026.jpg", "Railbookers|Worldwide Independent Rail Vacations 2027–2028": "covers/railbookers-worldwide-independent-rail-vacations-20272028.jpg", "Railbookers|Luxury Rail Journeys 2027–2028": "covers/railbookers-luxury-rail-journeys-20272028.jpg", "Railbookers|Stars & Stripes 2027–2028": "covers/railbookers-stars-stripes-20272028.jpg", "Railbookers|Alaska by Rail 2027–2028": "covers/railbookers-alaska-by-rail-20272028.jpg", "Railbookers|Canada by Rail 2027–2028": "covers/railbookers-canada-by-rail-20272028.jpg", "Railbookers|Canyon Spirit Guide": "covers/railbookers-canyon-spirit-guide.jpg", "Railbookers|UK and Ireland by Rail 2027–2028": "covers/railbookers-uk-and-ireland-by-rail-20272028.jpg", "Railbookers|Caledonian Sleeper Guide": "covers/railbookers-caledonian-sleeper-guide.jpg", "Railbookers|Italy by Rail 2027–2028": "covers/railbookers-italy-by-rail-20272028.jpg", "Railbookers|Iconic Italy 2027–2028": "covers/railbookers-iconic-italy-20272028.jpg", "Railbookers|Italy Uncovered 2027–2028": "covers/railbookers-italy-uncovered-20272028.jpg", "Railbookers|Italy Sightseeing & Activities Guide": "covers/railbookers-italy-sightseeing-activities-guide.jpg", "Railbookers|Italy and Switzerland by Rail 2027–2028": "covers/railbookers-italy-and-switzerland-by-rail-20272028.jpg", "Railbookers|Switzerland by Rail 2027–2028": "covers/railbookers-switzerland-by-rail-20272028.jpg", "Railbookers|Glacier Express Guide": "covers/railbookers-glacier-express-guide.jpg", "Railbookers|Spain by Rail 2027–2028": "covers/railbookers-spain-by-rail-20272028.jpg", "Railbookers|Japan by Rail 2027–2028": "covers/railbookers-japan-by-rail-20272028.jpg", "Railbookers|Vietnam & Southeast Asia by Rail 2027–2028": "covers/railbookers-vietnam-southeast-asia-by-rail-20272028.jpg", "Railbookers|Norway Coastal Cruises 2027–2028": "covers/railbookers-norway-coastal-cruises-20272028.jpg", "Railbookers|Cruise Extensions 2027–2028": "covers/railbookers-cruise-extensions-20272028.jpg", "Amtrak Vacations & Railbookers|Rail Vacations Reference Guide": "covers/amtrak-vacations-railbookers-rail-vacations-reference-guide.jpg", "World of Hyatt|Inclusive Collection": "covers/world-of-hyatt-inclusive-collection.jpg", "Luxury Gold|Worldwide Small Group Journeys 2026 & 2027": "covers/luxury-gold-worldwide-small-group-journeys-2026-2027.jpg", "Norwegian Cruise Line|Worldwide Cruising Guide 2026–2028": "covers/norwegian-cruise-line-worldwide-cruising-guide-20262028.jpg", "Poseidon Expeditions|Polar Regions: Arctic & Antarctica 2027–2028": "covers/poseidon-expeditions-polar-regions-arctic-antarctica-20272028.jpg", "Rocky Mountaineer|2027 Canadian Luxury Train Guide": "covers/rocky-mountaineer-2027-canadian-luxury-train-guide.jpg", "Rocky Mountaineer|Canyon Spirit 2027": "covers/rocky-mountaineer-canyon-spirit-2027.jpg", "Princess Cruises|Destination Collection Summer 2027 – Spring 2028": "covers/princess-cruises-destination-collection-summer-2027-spring-2028.jpg", "Holland America|Iconic Journeys 2026–2028": "covers/holland-america-iconic-journeys-20262028.jpg", "Cunard|August 2026 – January 2029": "covers/cunard-august-2026-january-2029.jpg", "Silversea|Voyage Collection 2028–2029: Itineraries at a Glance": "covers/silversea-voyage-collection-20282029-itineraries-at-a-glance.jpg", "Royalton Hotels & Resorts|Our Resorts": "covers/royalton-hotels-resorts-our-resorts.jpg", "Swain Destinations|Adventure in Queensland": "covers/swain-destinations-adventure-in-queensland.jpg", "Swain Destinations|Family Adventure in Queensland": "covers/swain-destinations-family-adventure-in-queensland.jpg", "Swain Destinations|Adventure in South Australia": "covers/swain-destinations-adventure-in-south-australia.jpg", "Swain Destinations|Australian Capital Territory": "covers/swain-destinations-australian-capital-territory.jpg", "Swain Destinations|The Story of Australia's Northern Territory": "covers/swain-destinations-the-story-of-australia-s-northern-territory.jpg", "Swain Destinations|Adventure in New Zealand": "covers/swain-destinations-adventure-in-new-zealand.jpg", "Swain Destinations|Golf New Zealand": "covers/swain-destinations-golf-new-zealand.jpg", "Swain Destinations|Adventure in South Africa": "covers/swain-destinations-adventure-in-south-africa.jpg", "Swain Destinations|On Safari in Kenya & Tanzania": "covers/swain-destinations-on-safari-in-kenya-tanzania.jpg", "Disney Cruise Line|Where Magic Meets the Sea": "covers/disney-cruise-line-where-magic-meets-the-sea.jpg", "Adventures by Disney|2027 Destination Guide": "covers/adventures-by-disney-2027-destination-guide.jpg", "Holland America|Grand Voyages 2027": "covers/holland-america-grand-voyages-2027.jpg", "AmaWaterways|European River Cruises 2027": "covers/amawaterways-european-river-cruises-2027.jpg", "AmaWaterways|Your River Cruise Guide Spring 2027": "covers/amawaterways-your-river-cruise-guide-spring-2027.jpg", "Celebrity Cruises|Celebrity River Cruises 2027": "covers/celebrity-cruises-celebrity-river-cruises-2027.jpg", "Viking|2027 & 2028 World Cruise Collection": "covers/viking-2027-2028-world-cruise-collection.jpg", "Celebrity Cruises|2026/27 Worldwide Cruises": "covers/celebrity-cruises-2026-27-worldwide-cruises.jpg", "Cunard|Caribbean 2026–2027": "covers/cunard-caribbean-20262027.jpg", "Azamara|Africa & Middle East Destination Guide 2026–2027": "covers/azamara-africa-middle-east-destination-guide-20262027.jpg", "Azamara|Africa Land Program Guide": "covers/azamara-africa-land-program-guide.jpg", "Azamara|Alaska & Canada Destination Guide 2026–2027": "covers/azamara-alaska-canada-destination-guide-20262027.jpg", "Azamara|Alaska Cruisetours Guide 2027": "covers/azamara-alaska-cruisetours-guide-2027.jpg", "Azamara|Asia, Australia & New Zealand Destination Guide 2026–2027": "covers/azamara-asia-australia-new-zealand-destination-guide-20262027.jpg", "Azamara|Asia, Australia & New Zealand Land Program Guide": "covers/azamara-asia-australia-new-zealand-land-program-guide.jpg", "Azamara|Day-by-Day Itineraries 2026–2028": "covers/azamara-day-by-day-itineraries-20262028.jpg", "Celebrity Cruises|All-Inclusive Galápagos Islands": "covers/celebrity-cruises-all-inclusive-galapagos-islands.jpg", "Abercrombie & Kent|Tailormade Journeys 2027–2028": "covers/abercrombie-kent-tailormade-journeys-20272028.jpg", "Abercrombie & Kent|Canal Barge Cruises 2027": "covers/abercrombie-kent-canal-barge-cruises-2027.jpg", "Abercrombie & Kent|The Seven Continents by Private Jet 2028": "covers/abercrombie-kent-the-seven-continents-by-private-jet-2028.jpg", "Abercrombie & Kent|Wildlife Safari: Around the World by Private Jet 2028": "covers/abercrombie-kent-wildlife-safari-around-the-world-by-private-jet-2028.jpg", "A&S Signature Journeys|The Art of Tailored Travel": "covers/a-s-signature-journeys-the-art-of-tailored-travel.jpg", "Anthony's Key Resort|Anthony's Key Resort": "covers/anthony-s-key-resort-anthony-s-key-resort.jpg", "Disneyland Resort|Disneyland Resort": "covers/disneyland-resort-disneyland-resort.jpg", "MSC Cruises|MSC World America 2025/2026": "covers/msc-cruises-msc-world-america-2025-2026.jpg", "MSC Cruises|MSC World Asia 2026/2027": "covers/msc-cruises-msc-world-asia-2026-2027.jpg", "MSC Cruises|MSC Yacht Club": "covers/msc-cruises-msc-yacht-club.jpg", "Viking|River, Ocean & Expedition Voyages 2027–2029": "covers/viking-river-ocean-expedition-voyages-20272029.jpg", "Great Rail Journeys|North America 2027": "covers/great-rail-journeys-north-america-2027.jpg", "Great Rail Journeys|Europe & Worldwide 2027": "covers/great-rail-journeys-europe-worldwide-2027.jpg", "Great Rail Journeys|Rail & Cruise in Europe 2027": "covers/great-rail-journeys-rail-cruise-in-europe-2027.jpg", "Great Rail Journeys|Landmark Tours: A Premium Collection": "covers/great-rail-journeys-landmark-tours-a-premium-collection.jpg", "VBT Bicycling Vacations|2026 Bicycling Vacations": "covers/vbt-bicycling-vacations-2026-bicycling-vacations.jpg", "Walt Disney World Resort|Walt Disney World Resort": "covers/walt-disney-world-resort-walt-disney-world-resort.jpg", "RIU Hotels & Resorts|RIU Travelogue": "covers/riu-hotels-resorts-riu-travelogue.jpg", "Funjet Vacations|Weddings: Mexico": "covers/funjet-vacations-weddings-mexico.jpg", "Funjet Vacations|Weddings: Caribbean": "covers/funjet-vacations-weddings-caribbean.jpg", "Funjet Vacations|Weddings: Central America": "covers/funjet-vacations-weddings-central-america.jpg", "Funjet Vacations|Groups: Mexico": "covers/funjet-vacations-groups-mexico.jpg", "Funjet Vacations|Groups: Caribbean": "covers/funjet-vacations-groups-caribbean.jpg", "Funjet Vacations|Groups: Central America": "covers/funjet-vacations-groups-central-america.jpg", "Funjet Vacations|Croatia & Montenegro": "covers/funjet-vacations-croatia-montenegro.jpg", "Funjet Vacations|France & Monaco": "covers/funjet-vacations-france-monaco.jpg", "Funjet Vacations|Germany": "covers/funjet-vacations-germany.jpg", "Funjet Vacations|Greece": "covers/funjet-vacations-greece.jpg", "Funjet Vacations|Italy": "covers/funjet-vacations-italy.jpg", "Funjet Vacations|Netherlands": "covers/funjet-vacations-netherlands.jpg", "Funjet Vacations|Portugal": "covers/funjet-vacations-portugal.jpg", "Funjet Vacations|Spain": "covers/funjet-vacations-spain.jpg", "Funjet Vacations|Switzerland": "covers/funjet-vacations-switzerland.jpg", "Funjet Vacations|United Kingdom & Ireland": "covers/funjet-vacations-united-kingdom-ireland.jpg", "Funjet Vacations|Acapulco": "covers/funjet-vacations-acapulco.jpg", "Funjet Vacations|Cancun": "covers/funjet-vacations-cancun.jpg", "Funjet Vacations|Cozumel": "covers/funjet-vacations-cozumel.jpg", "Funjet Vacations|Huatulco": "covers/funjet-vacations-huatulco.jpg", "Funjet Vacations|Ixtapa/Zihuatanejo": "covers/funjet-vacations-ixtapa-zihuatanejo.jpg", "Funjet Vacations|Los Cabos": "covers/funjet-vacations-los-cabos.jpg", "Funjet Vacations|Mazatlán": "covers/funjet-vacations-mazatlan.jpg", "Funjet Vacations|Costa/Isla/Playa Mujeres": "covers/funjet-vacations-costa-isla-playa-mujeres.jpg", "Funjet Vacations|Puerto Vallarta": "covers/funjet-vacations-puerto-vallarta.jpg", "Funjet Vacations|Riviera Maya": "covers/funjet-vacations-riviera-maya.jpg", "Funjet Vacations|Riviera Nayarit": "covers/funjet-vacations-riviera-nayarit.jpg", "Funjet Vacations|San Miguel de Allende": "covers/funjet-vacations-san-miguel-de-allende.jpg", "Funjet Vacations|Antigua": "covers/funjet-vacations-antigua.jpg", "Funjet Vacations|Aruba": "covers/funjet-vacations-aruba.jpg", "Funjet Vacations|Bahamas": "covers/funjet-vacations-bahamas.jpg", "Funjet Vacations|Barbados": "covers/funjet-vacations-barbados.jpg", "Funjet Vacations|Curaçao": "covers/funjet-vacations-curacao.jpg", "Funjet Vacations|Grand Cayman": "covers/funjet-vacations-grand-cayman.jpg", "Funjet Vacations|Grenada": "covers/funjet-vacations-grenada.jpg", "Funjet Vacations|Puerto Rico": "covers/funjet-vacations-puerto-rico.jpg", "Funjet Vacations|St. Kitts": "covers/funjet-vacations-st-kitts.jpg", "Funjet Vacations|Saint Lucia": "covers/funjet-vacations-saint-lucia.jpg", "Funjet Vacations|Sint Maarten/St. Martin": "covers/funjet-vacations-sint-maarten-st-martin.jpg", "Funjet Vacations|U.S. Virgin Islands": "covers/funjet-vacations-u-s-virgin-islands.jpg", "Funjet Vacations|Dominican Republic": "covers/funjet-vacations-dominican-republic.jpg", "Funjet Vacations|Jamaica": "covers/funjet-vacations-jamaica.jpg", "Funjet Vacations|Central America: Costa Rica & Panama": "covers/funjet-vacations-central-america-costa-rica-panama.jpg", "Funjet Vacations|Hawaii": "covers/funjet-vacations-hawaii.jpg", "Hawaiʻi Visitors & Convention Bureau|Experience the Hawaiian Islands: Official Visitors' Guide": "covers/hawaii-visitors-convention-bureau-experience-the-hawaiian-islands-official-visit.jpg", "Cook Islands Tourism|Cook Islands": "covers/cook-islands-tourism-cook-islands.jpg", "ANZCRO|The New Zealand Book 2026–2027": "covers/anzcro-the-new-zealand-book-20262027.jpg", "Tahiti Tourisme|The Islands of Tahiti": "covers/tahiti-tourisme-the-islands-of-tahiti.jpg"};
+const SHELVES=[
+ {id:"ocean",name:"Ocean Cruises"},
+ {id:"river",name:"River Cruises"},
+ {id:"expedition",name:"Expedition Cruises"},
+ {id:"rail",name:"Rail Journeys"},
+ {id:"resorts",name:"All-Inclusive Resorts"},
+ {id:"disney",name:"Disney Vacations"},
+{id:"weddings",name:"Weddings & Groups"},
+ {id:"tours",name:"Guided Tours"},
+{id:"dest-europe",name:"Europe Destination Guides",g:"dest"},
+{id:"dest-mexico",name:"Mexico Destination Guides",g:"dest"},
+{id:"dest-caribbean",name:"Caribbean Destination Guides",g:"dest"},
+{id:"dest-more",name:"Hawaii & Central America Destination Guides",g:"dest"},
+{id:"dest-pacific",name:"South Pacific Destination Guides",g:"dest"}
+];
+// [shelf, vendor, brochure, link, extra search words]
+const B=[
+ ["ocean","Carnival Cruise Line","Cruise Vacations","brochures/carnival-cruise-vacations.pdf","caribbean family fun"],
+ ["disney","Disney Cruise Line","Where Magic Meets the Sea","brochures/disney-cruise-line-planner.pdf","disney family kids bahamas caribbean castaway cay"],
+ ["ocean","Norwegian Cruise Line","Worldwide Cruising Guide 2026–2028","brochures/ncl-worldwide-cruising-guide-2026-2028.pdf","ncl alaska asia australia bahamas bermuda canada caribbean europe hawaii"],
+ ["ocean","Princess Cruises","Alaska","https://www.princess.com/content/dam/princess/princess-cruises-brochures/2027-Alaska-Brochure-US.pdf","cruisetours glacier"],
+ ["ocean","Princess Cruises","Destination Collection Summer 2027 – Spring 2028","brochures/princess-destination-collection-2027-2028.pdf","caribbean europe mediterranean asia australia south america world cruise"],
+ ["ocean","Holland America","Alaska","brochures/hal-alaska-2027.pdf","cruisetours glacier 80 years"],
+ ["ocean","Holland America","Caribbean","brochures/hal-caribbean.pdf","bahamas islands beach"],
+ ["ocean","Holland America","Europe","https://www.hollandamerica.com/content/dam/hal/marketing-assets/cruise-planning/2027-hal-europe-planner.pdf","norway mediterranean"],
+ ["ocean","Holland America","Canada & New England","https://www.hollandamerica.com/content/dam/hal/marketing-assets/PDFs/2027-hal-canada-new-england-planner.pdf","maine fall foliage"],
+ ["ocean","Holland America","Hawaii & Panama Canal","https://www.hollandamerica.com/content/dam/hal/marketing-assets/PDFs/2027-2028-hal-hawaii-panama-planner.pdf","honolulu"],
+ ["ocean","Holland America","Asia","brochures/hal-asia.pdf","japan"],
+ ["ocean","Holland America","Australia, New Zealand & The South Pacific","brochures/hal-australia-nz-south-pacific.pdf","sydney"],
+ ["ocean","Holland America","South America & Antarctica","https://www.hollandamerica.com/content/dam/hal/marketing-assets/PDFs/2027-2028-hal-south-america-antarctica-planner.pdf","penguin"],
+ ["ocean","Holland America","Grand Voyages 2027","https://www.hollandamerica.com/content/dam/hal/marketing-assets/PDFs/2027-hal-grand-voyages-planner.pdf","world cruise easter island"],
+ ["ocean","Holland America","Iconic Journeys 2026–2028","brochures/hal-iconic-journeys-2026-2028.pdf","legendary voyages grand voyages world cruise 25 day"],
+ ["ocean","Holland America","Unforgettable Journeys","brochures/hal-unforgettable-journeys.pdf","2027 2028 itineraries"],
+ ["ocean","Azamara","Europe Destination Guide 2026–2027","https://brochures.azamara.com/view/343000187/","destination guide montenegro kotor"],
+ ["ocean","Azamara","Europe Land Program Guide","https://brochures.azamara.com/view/1056655472/","pre post land programs italy venice"],
+ ["ocean","Azamara","Caribbean, North & South America Land Program Guide","https://brochures.azamara.com/Pre-Post-Americas-Caribbean/","pre post land programs iguazu falls"],
+ ["ocean", "Azamara", "Day-by-Day Itineraries 2026–2028", "https://brochures.azamara.com/view/388296970/", "itineraries all voyages 2026 2027 2028"],
+ ["ocean", "Azamara", "Asia, Australia & New Zealand Land Program Guide", "https://brochures.azamara.com/view/1056363286/", "pre post land programs korea seoul"],
+ ["ocean", "Azamara", "Asia, Australia & New Zealand Destination Guide 2026–2027", "https://brochures.azamara.com/view/343560862/", "destination guide asia australia new zealand"],
+ ["ocean", "Azamara", "Alaska Cruisetours Guide 2027", "https://brochures.azamara.com/Azamara-Alaska-Cruise-Tours-2027/", "alaska cruisetours denali rail"],
+ ["ocean", "Azamara", "Alaska & Canada Destination Guide 2026–2027", "https://brochures.azamara.com/view/343553671/", "destination guide alaska canada bears"],
+ ["ocean", "Azamara", "Africa Land Program Guide", "https://brochures.azamara.com/view/1056535807/", "pre post land programs safari zebra"],
+ ["ocean", "Azamara", "Africa & Middle East Destination Guide 2026–2027", "https://brochures.azamara.com/view/343500371/", "destination guide africa middle east safari"],
+ ["ocean","Cunard","August 2026 – January 2029","brochures/cunard-aug-2026-jan-2029.pdf","queen mary queen anne transatlantic world voyage"],
+ ["ocean", "Cunard", "Caribbean 2026–2027", "https://cunard-us.paperturn-view.com/caribbean-overview-2026-2027?pid=ODk8928511&v=1.1", "caribbean queen mary 2 queen elizabeth"],
+ ["ocean","Silversea","Voyage Collection 2028–2029: Itineraries at a Glance","brochures/silversea-itineraries-2028-2029.pdf","luxury cruise world"],
+ ["ocean","Explora Journeys","Winter 2026–2027","brochures/explora-winter-2026-2027.pdf","october 2026 may 2027 ocean of new luxury"],
+ ["ocean","Explora Journeys","Festive Journeys 2026","brochures/explora-festive-2026.pdf","christmas holiday celebrations at sea luxury"],
+ ["ocean","Explora Journeys","Summer 2027","brochures/explora-summer-2027.pdf","march november 2027 ocean of new luxury"],
+ ["ocean","Explora Journeys","Winter 2027–2028","brochures/explora-winter-2027-2028.pdf","september 2027 may 2028 ocean of new luxury"],
+ ["ocean","Explora Journeys","Summer 2028","brochures/explora-summer-2028.pdf","new journeys collection 2028 greece corfu north america luxury"],
+ ["ocean","Explora Journeys","2029 World Journey","brochures/explora-endless-worlds-2029.pdf","endless worlds world cruise 128 day inaugural luxury"],
+ ["ocean","Explora Journeys","The Ocean State of Mind","brochures/explora-ocean-state-of-mind.pdf","brand booklet luxury ships"],
+ ["ocean", "Viking", "2027 & 2028 World Cruise Collection", "https://brochures.viking.com/view/15606475/", "world cruise africa asia australia antarctica safari"],
+ ["ocean", "Celebrity Cruises", "2026/27 Worldwide Cruises", "https://secure.viewer.zmags.com/publication/71043163#/71043163/2", "worldwide alaska europe caribbean australia asia"],
+ ["ocean", "MSC Cruises", "MSC World America 2025/2026", "https://issuu.com/msc-cruises/docs/msc-cruises-nem-folder-msc-wordl-america?fr=xKAE9_zU1NQ", "caribbean ocean cay bahamas world class"],
+ ["ocean", "MSC Cruises", "MSC World Asia 2026/2027", "https://issuu.com/msc-cruises/docs/msc-cruises-uk-folder-msc-world-asia?fr=sZmU1ZTg4MzgxNzA", "asia japan singapore"],
+ ["ocean", "MSC Cruises", "MSC Yacht Club", "https://issuu.com/msc-cruises/docs/msc-cruises-uk-folder-msc-yacht-club?fr=sMmEwYTgzNTQzOTk", "luxury suites butler ship within a ship"],
+ ["ocean", "Viking", "River, Ocean & Expedition Voyages 2027–2029", "https://brochures.viking.com/view/1021048951/", "river ocean expedition all inclusive no children"],
+ ["river","Uniworld","Danube River Cruise Collection","brochures/uniworld-danube.pdf","budapest europe"],
+ ["river","Uniworld","France: The Place to Be","brochures/uniworld-france.pdf","paris europe"],
+ ["river","Uniworld","Italy & The Veneto Region","brochures/uniworld-italy.pdf","venice europe"],
+ ["river","Uniworld","Uncover the Heart of Egypt","brochures/uniworld-egypt.pdf","nile africa"],
+ ["river","Uniworld","Spectacular Journeys in India","brochures/uniworld-india.pdf","asia"],
+ ["river","Uniworld","Cruise & Rail","brochures/uniworld-cruise-rail.pdf","train europe"],
+ ["river","Uniworld","Land Extensions","brochures/uniworld-land-extensions.pdf","greece athens"],
+ ["river","American Cruise Lines","American Cruise Collection 2027–2029","brochures/acl-american-cruise-collection-2027-2029.pdf","mississippi ohio river southeast usa america coastal small ship"],
+ ["river","Trafalgar","River Cruises","https://issuu.com/trafalgar.tours/docs/trafalgar_-_river_cruises_-_us_market?fr=sNGJjMzg2MjY3NTc","europe rhine"],
+ ["expedition","Lindblad Expeditions","Explorations 2026–2028","brochures/lindblad-explorations-2026-2028.pdf","national geographic worldwide all destinations"],
+ ["expedition","Lindblad Expeditions","Voyages of Discovery 2026–2028","brochures/lindblad-voyages-of-discovery-2026-2028.pdf","national geographic worldwide"],
+ ["expedition","Lindblad Expeditions","Uncommon Voyages 2026–2028","brochures/lindblad-uncommon-voyages-2026-2028.pdf","national geographic asia south pacific europe caribbean"],
+ ["expedition","Lindblad Expeditions","Alaska 2027–2028","brochures/lindblad-alaska-2027-2028.pdf","national geographic"],
+ ["expedition","Lindblad Expeditions","Antarctica 2026–2028","brochures/lindblad-antarctica-2026-2028.pdf","national geographic polar"],
+ ["expedition","Lindblad Expeditions","The Arctic 2026–2028","brochures/lindblad-arctic-2026-2028.pdf","national geographic polar iceland greenland svalbard norway canada"],
+ ["expedition","Lindblad Expeditions","Iceland 2026–2027","brochures/lindblad-iceland-2026-2027.pdf","national geographic greenland"],
+ ["expedition","Lindblad Expeditions","Galápagos 2026–2028","brochures/lindblad-galapagos-2026-2028.pdf","national geographic galapagos ecuador south america"],
+ ["expedition","Lindblad Expeditions","Central America & Colombia 2026–2028","brochures/lindblad-central-america-colombia-2026-2028.pdf","national geographic panama canal costa rica"],
+ ["expedition","Lindblad Expeditions","Baja California & Channel Islands 2026–2027","brochures/lindblad-baja-channel-islands.pdf","national geographic mexico california"],
+ ["expedition","Lindblad Expeditions","The Wild Pacific Coast 2026–2028","brochures/lindblad-wild-pacific-coast-2026-2028.pdf","national geographic baja california"],
+ ["expedition","Lindblad Expeditions","Europe 2026–2028","brochures/lindblad-europe-2026-2028.pdf","national geographic"],
+ ["expedition","Lindblad Expeditions","The Mediterranean 2026–2027","brochures/lindblad-mediterranean-2026-2027.pdf","national geographic europe wine sea cloud"],
+ ["expedition","Poseidon Expeditions","Polar Regions: Arctic & Antarctica 2027–2028","brochures/poseidon-arctic-antarctica-2027-2028.pdf","arctic antarctica polar"],
+ ["expedition", "Celebrity Cruises", "All-Inclusive Galápagos Islands", "https://secure.viewer.zmags.com/publication/5bbaa86c#/5bbaa86c/1", "galapagos ecuador expedition all inclusive wildlife"],
+ ["river","Lindblad Expeditions","River Cruises Reimagined 2026–2027","brochures/lindblad-river-cruises-2026-2027.pdf","national geographic europe germany france netherlands"],
+ ["river", "AmaWaterways", "European River Cruises 2027", "https://issuu.com/amawaterwaysrivercruises/docs/2027_european_river_cruises_brochure_usd", "europe river danube rhine douro portugal"],
+ ["river", "AmaWaterways", "Your River Cruise Guide Spring 2027", "https://issuu.com/amawaterwaysrivercruises/docs/2026_june_spring_europe_dm_usd", "tulip netherlands holland windmills spring europe"],
+ ["river", "Celebrity Cruises", "Celebrity River Cruises 2027", "https://www.rcgdigitalbrochures.com/content/uploads/2025/09/celebrity-river-cruises-2027-brochure-compressed.pdf", "river europe danube budapest"],
+ ["rail","Amtrak Vacations","Rail Vacations USA & Canada 2027–2028","brochures/amtrak-rail-vacations-2027-2028.pdf","train usa canada"],
+ ["rail","Amtrak Vacations","Famous Routes 2027–2028","brochures/amtrak-famous-routes-2027-2028.pdf","train usa"],
+ ["rail","Amtrak Vacations","Cross-Country 2027–2028","brochures/amtrak-cross-country-2027-2028.pdf","train usa coast to coast"],
+ ["rail","Amtrak Vacations","National Parks 2027–2028","brochures/amtrak-national-parks-2027-2028.pdf","train usa grand canyon yellowstone"],
+ ["rail","Amtrak Vacations","The Mighty 5 National Parks 2027–2028","brochures/amtrak-mighty-5-2027-2028.pdf","train utah southwest national parks"],
+ ["rail","Amtrak Vacations","West Coast 2027–2028","brochures/amtrak-west-coast-2027-2028.pdf","train california"],
+ ["rail","Amtrak Vacations","Pacific Northwest 2027–2028","brochures/amtrak-pacific-northwest-2027-2028.pdf","train seattle portland"],
+ ["rail","Amtrak Vacations","Rail Experiences 2027–2028","brochures/amtrak-rail-experiences-2027-2028.pdf","train usa"],
+ ["rail","Amtrak Vacations","Aboard Amtrak 2027–2028","brochures/amtrak-aboard-amtrak-2027-2028.pdf","train sleeper onboard"],
+ ["rail","Rocky Mountaineer","2027 Canadian Luxury Train Guide","brochures/rocky-mountaineer-canada-2027.pdf","canada rockies vancouver banff lake louise jasper train"],
+ ["rail","Rocky Mountaineer","Canyon Spirit 2027","brochures/rocky-mountaineer-canyon-spirit-2027.pdf","denver glenwood springs moab salt lake city utah colorado southwest train"],
+ ["rail","Railbookers","Worldwide Independent Rail Vacations 2027–2028","brochures/railbookers-worldwide-rail-2027-2028.pdf","europe north america australia asia africa south america train"],
+ ["rail","Railbookers","Luxury Rail Journeys 2027–2028","brochures/railbookers-luxury-rail-2027-2028.pdf","luxury train orient express"],
+ ["rail","Railbookers","Stars & Stripes 2027–2028","brochures/railbookers-stars-and-stripes-2027-2028.pdf","usa america history train"],
+ ["rail","Railbookers","Alaska by Rail 2027–2028","brochures/railbookers-alaska-2027-2028.pdf","alaska train"],
+ ["rail","Railbookers","Canada by Rail 2027–2028","brochures/railbookers-canada-2027-2028.pdf","canada rockies train"],
+ ["rail","Railbookers","Canyon Spirit Guide","brochures/railbookers-canyon-spirit-guide.pdf","rocky mountaineer utah colorado moab train"],
+ ["rail","Railbookers","UK and Ireland by Rail 2027–2028","brochures/railbookers-uk-ireland-2027-2028.pdf","england scotland ireland london train"],
+ ["rail","Railbookers","Caledonian Sleeper Guide","brochures/railbookers-caledonian-sleeper-guide.pdf","scotland london sleeper train"],
+ ["rail","Railbookers","Italy by Rail 2027–2028","brochures/railbookers-italy-2027-2028.pdf","italy rome venice florence train"],
+ ["rail","Railbookers","Iconic Italy 2027–2028","brochures/railbookers-iconic-italy-2027-2028.pdf","italy trenitalia train"],
+ ["rail","Railbookers","Italy Uncovered 2027–2028","brochures/railbookers-italy-uncovered-2027-2028.pdf","italy trenitalia train"],
+ ["rail","Railbookers","Italy Sightseeing & Activities Guide","brochures/railbookers-italy-sightseeing-guide.pdf","italy rome tours activities"],
+ ["rail","Railbookers","Italy and Switzerland by Rail 2027–2028","brochures/railbookers-italy-switzerland-2027-2028.pdf","italy switzerland alps train"],
+ ["rail","Railbookers","Switzerland by Rail 2027–2028","brochures/railbookers-switzerland-2027-2028.pdf","switzerland alps train"],
+ ["rail","Railbookers","Glacier Express Guide","brochures/railbookers-glacier-express-guide.pdf","switzerland alps train"],
+ ["rail","Railbookers","Spain by Rail 2027–2028","brochures/railbookers-spain-2027-2028.pdf","spain madrid barcelona train"],
+ ["rail","Railbookers","Japan by Rail 2027–2028","brochures/railbookers-japan-2027-2028.pdf","japan tokyo kyoto asia train"],
+ ["rail","Railbookers","Vietnam & Southeast Asia by Rail 2027–2028","brochures/railbookers-vietnam-2027-2028.pdf","vietnam southeast asia train"],
+ ["rail","Railbookers","Norway Coastal Cruises 2027–2028","brochures/railbookers-norway-coastal-cruises-2027-2028.pdf","norway hurtigruten fjords cruise"],
+ ["rail","Railbookers","Cruise Extensions 2027–2028","brochures/railbookers-cruise-extensions-2027-2028.pdf","pre post cruise train"],
+ ["rail","Amtrak Vacations & Railbookers","Rail Vacations Reference Guide","brochures/amtrak-railbookers-reference-guide.pdf","train usa worldwide"],
+ ["rail", "Great Rail Journeys", "North America 2027", "https://www.greatrail.com/us/ebrochure/use27/", "usa canada rockies train"],
+ ["rail", "Great Rail Journeys", "Europe & Worldwide 2027", "https://www.greatrail.com/us/ebrochure/eurrtw27/", "europe italy worldwide train"],
+ ["rail", "Great Rail Journeys", "Rail & Cruise in Europe 2027", "https://www.greatrail.com/us/ebrochure/cruise27/", "river cruise train switzerland danube"],
+ ["rail", "Great Rail Journeys", "Landmark Tours: A Premium Collection", "https://www.greatrail.com/us/ebrochure/land27/", "premium luxury train south africa"],
+ ["resorts","Sandals Resorts","Caribbean Resorts for Adults","brochures/sandals-caribbean-resorts-for-adults.pdf","jamaica antigua saint lucia bahamas grenada barbados curacao turks caicos saint vincent all inclusive adults couples caribbean"],
+ ["resorts","Sandals & Beaches Resorts","Jamaica Destination Guide","brochures/sandals-jamaica-destination-guide.pdf","jamaica all inclusive family caribbean"],
+ ["resorts","Sandals & Beaches Resorts","Caribbean Destination Weddings 2026","brochures/sandals-beaches-weddings-2026.pdf","wedding honeymoon caribbean all inclusive"],
+ ["resorts","Couples Resorts","Couples Negril Resort Directory","brochures/couples-negril-resort-directory.pdf","jamaica negril adults couples all inclusive"],
+ ["resorts","Couples Resorts","Couples Sans Souci Resort Directory","brochures/couples-sans-souci-resort-directory.pdf","jamaica ocho rios adults couples all inclusive"],
+ ["resorts","Couples Resorts","Couples Tower Isle Resort Directory","brochures/couples-tower-isle-resort-directory.pdf","jamaica ocho rios adults couples all inclusive"],
+ ["resorts","World of Hyatt","Inclusive Collection","brochures/hyatt-inclusive-collection.pdf","secrets dreams zoetry breathless impression sunscape alua all inclusive mexico caribbean"],
+ ["resorts","Bahia Principe","The Art of Finding Your Own Flow","brochures/bahia-principe-find-your-flow-2026.pdf","dominican republic mexico jamaica spain all inclusive"],
+ ["resorts","Carlisle Bay","Laidback Luxury in Antigua","brochures/carlisle-bay-antigua.pdf","antigua caribbean luxury resort"],
+ ["resorts","Royalton Hotels & Resorts","Our Resorts","brochures/royalton-resorts.pdf","all inclusive caribbean mexico dominican republic jamaica saint lucia antigua grenada"],
+ ["resorts", "Anthony's Key Resort", "Anthony's Key Resort", "https://www.flipsnack.com/anthonyskeyresort/brochure", "roatan honduras bay islands diving"],
+ ["resorts", "RIU Hotels & Resorts", "RIU Travelogue", "https://www.algvtravelogue.com/riu/fj-riu/", "riu all inclusive mexico caribbean jamaica punta cana funjet"],
+ ["tours","Globus","Worldwide Travel Planner 2026 & 2027","brochures/globus-worldwide-travel-planner-2026-2027.pdf","worldwide europe guided"],
+ ["tours","The Travel Corporation","Worldwide Tours for Any and Everyone 2025/2026","brochures/ttc-worldwide-tours-2025-2026.pdf","trafalgar insight luxury gold costsaver contiki brendan best sellers worldwide"],
+ ["tours","Luxury Gold","Worldwide Small Group Journeys 2026 & 2027","brochures/luxury-gold-worldwide-2026-2027.pdf","luxury small group worldwide"],
+ ["tours","Trafalgar","Europe & Britain 2027","https://issuu.com/trafalgar.tours/docs/tt_europe_britain_us_2027_28?fr=xKAE9_zMzMw","england london"],
+ ["tours","Trafalgar","The Americas 2027/2028","https://issuu.com/trafalgar.tours/docs/trafalgar_the_americas_2027_28_us?fr=xKAE9_zMzMw","usa canada peru south america"],
+ ["tours","Trafalgar","Worldwide Tours 2027/2028","https://issuu.com/trafalgar.tours/docs/trafalgar_worldwide_2027_28_us?fr=sNzU2MTg2MjY3NTc","asia africa"],
+ ["tours","Insight Vacations","Europe, Britain & The World","https://issuu.com/trafalgar.tours/docs/europe_britain_and_the_world_us_iv?fr=xKAE9_zMzMw","italy premium"],
+ ["tours","Insight Vacations","The Americas 2027/2028","https://issuu.com/trafalgar.tours/docs/iv_americas_2027_28_us?fr=xKAE9_zMzMw","canada usa south america"],
+ ["tours","Brendan Vacations","Ireland & Scotland","https://issuu.com/trafalgar.tours/docs/us_brendan_vacations_2027_2028?fr=xKAE9_zMzMw","europe britain"],
+ ["tours","AAT Kings","Australia & New Zealand","https://issuu.com/aatkings/docs/australia-and-new-zealand-2027-28-us-ca","sydney"],
+ ["tours","Costsaver","Worldwide 2026/2027","https://issuu.com/trafalgar.tours/docs/costsaver_worldwide_-_us_market?fr=sYzJlMjg2MjY3NTc","budget europe asia"],
+ ["tours","Contiki","Contiki Worldwide","brochures/contiki-worldwide.pdf","18-35 young adults"],
+ ["tours","CIE Tours","Ireland & Britain and Beyond 2027","brochures/cie-tours-2027-collection.pdf","ireland scotland england iceland italy spain portugal"],
+ ["tours","Celtic Tours","Ireland, United Kingdom & Europe 2027","brochures/celtic-tours-2027.pdf","ireland scotland england europe golf"],
+ ["tours","Classic Journeys","Walking Tours 2027","brochures/classic-journeys-2027.pdf","walking cultural"],
+ ["tours","Abercrombie & Kent","A&K x Crystal Cruises 2027","brochures/ak-crystal-land-and-sea-2027.pdf","land and sea cruise luxury"],
+ ["tours","Abercrombie & Kent","Small Group Journeys 2027","brochures/ak-small-group-journeys-2027.pdf","small group luxury tours worldwide"],
+ ["tours","Abercrombie & Kent","Small Jet Journeys 2027","brochures/ak-small-jet-journeys-2027.pdf","jet luxury air"],
+ ["tours","Abercrombie & Kent","Africa: Across a Continent by Private Jet 2027","brochures/ak-private-jet-africa-2027.pdf","tunisia kenya rwanda south africa zimbabwe botswana benin morocco safari luxury"],
+ ["tours","Abercrombie & Kent","Epic Islands & Landscapes by Private Jet 2027","brochures/ak-private-jet-epic-islands-2027.pdf","galapagos easter island cook islands new zealand indonesia sri lanka tanzania sicily around the world luxury"],
+ ["tours","Abercrombie & Kent","Wild Wonders by Private Jet 2027","brochures/ak-private-jet-wild-wonders-2027.pdf","fiji tasmania bali seychelles south africa brazil pantanal costa rica around the world luxury"],
+ ["tours","Abercrombie & Kent","Hidden Horizons by Private Jet 2027","brochures/ak-private-jet-hidden-horizons-2027.pdf","azores algeria ghana sao tome zimbabwe seychelles kazakhstan bulgaria geoffrey kent luxury"],
+ ["tours", "Abercrombie & Kent", "Wildlife Safari: Around the World by Private Jet 2028", "https://issuu.com/abercrombieandkent/docs/wildlife_safari_around_the_world_by_private_jet_2", "jet safari wildlife kenya rwanda japan"],
+ ["tours", "Abercrombie & Kent", "The Seven Continents by Private Jet 2028", "https://issuu.com/abercrombieandkent/docs/the_seven_continents_by_private_jet_2028", "jet antarctica easter island maldives vietnam"],
+ ["tours", "Abercrombie & Kent", "Canal Barge Cruises 2027", "https://issuu.com/abercrombieandkent/docs/2027_canal_barge_cruises", "barge canal river france europe"],
+ ["tours", "Abercrombie & Kent", "Tailormade Journeys 2027–2028", "https://issuu.com/abercrombieandkent/docs/tailormade_journeys", "private custom egypt luxury"],
+ ["tours","African Travel","50 Years of Luxury Safaris 2027","brochures/african-travel-safaris-2027.pdf","africa safari luxury"],
+ ["tours","Swain Destinations","Adventure in Queensland","brochures/swain-queensland.pdf","australia great barrier reef lookbook"],
+ ["tours","Swain Destinations","Family Adventure in Queensland","brochures/swain-queensland-family.pdf","australia family kids lookbook"],
+ ["tours","Swain Destinations","Adventure in South Australia","brochures/swain-south-australia.pdf","australia adelaide wine lookbook"],
+ ["tours","Swain Destinations","Australian Capital Territory","brochures/swain-australian-capital-territory.pdf","australia canberra lookbook"],
+ ["tours","Swain Destinations","The Story of Australia's Northern Territory","brochures/swain-northern-territory.pdf","australia uluru darwin outback lookbook"],
+ ["tours","Swain Destinations","Adventure in New Zealand","brochures/swain-new-zealand.pdf","new zealand lookbook"],
+ ["tours","Swain Destinations","Golf New Zealand","brochures/swain-golf-new-zealand.pdf","new zealand golf lookbook"],
+ ["tours","Swain Destinations","Adventure in South Africa","brochures/swain-south-africa.pdf","south africa safari cape town lookbook"],
+ ["tours","Swain Destinations","On Safari in Kenya & Tanzania","brochures/swain-kenya-tanzania-safari.pdf","africa kenya tanzania safari serengeti lookbook"],
+ ["tours", "A&S Signature Journeys", "The Art of Tailored Travel", "https://agents.ansjourneys.com/wp-content/uploads/2026/02/flipbook_01.pdf", "custom tailored africa asia south america middle east"],
+ ["tours", "VBT Bicycling Vacations", "2026 Bicycling Vacations", "https://issuu.com/vbtvacation/docs/2026_vbt_digital_catalog", "bike cycling biking active italy tuscany"],
+ ["dest-europe", "Funjet Vacations", "Croatia & Montenegro", "https://www.algvtravelogue.com/europe/croatia/fj-croatia/", "croatia montenegro dubrovnik split adriatic balkans europe destination guide travelogue funjet"],
+ ["dest-europe", "Funjet Vacations", "France & Monaco", "https://www.algvtravelogue.com/europe/france/fj-france/", "france paris monaco provence riviera europe destination guide travelogue funjet"],
+ ["dest-europe", "Funjet Vacations", "Germany", "https://www.algvtravelogue.com/europe/germany/fj-germany/", "germany berlin munich bavaria europe destination guide travelogue funjet"],
+ ["dest-europe", "Funjet Vacations", "Greece", "https://www.algvtravelogue.com/europe/greece/fj-greece/", "greece athens santorini mykonos islands europe destination guide travelogue funjet"],
+ ["dest-europe", "Funjet Vacations", "Italy", "https://www.algvtravelogue.com/europe/italy/fj-italy/", "italy rome florence venice amalfi tuscany europe destination guide travelogue funjet"],
+ ["dest-europe", "Funjet Vacations", "Netherlands", "https://www.algvtravelogue.com/europe/netherlands/fj-netherlands/", "netherlands holland amsterdam europe destination guide travelogue funjet"],
+ ["dest-europe", "Funjet Vacations", "Portugal", "https://www.algvtravelogue.com/europe/portugal/fj/", "portugal lisbon porto algarve europe destination guide travelogue funjet"],
+ ["dest-europe", "Funjet Vacations", "Spain", "https://www.algvtravelogue.com/europe/spain/fj-spain/", "spain madrid barcelona seville europe destination guide travelogue funjet"],
+ ["dest-europe", "Funjet Vacations", "Switzerland", "https://www.algvtravelogue.com/europe/switzerland/fj/", "switzerland alps zurich zermatt europe destination guide travelogue funjet"],
+ ["dest-europe", "Funjet Vacations", "United Kingdom & Ireland", "https://www.algvtravelogue.com/europe/uk-ireland/fj-uk-ireland", "united kingdom uk england london scotland ireland dublin britain europe destination guide travelogue funjet"],
+ ["dest-mexico", "Funjet Vacations", "Acapulco", "https://www.algvtravelogue.com/mexico/fj/fj-mexico-acapulco/", "acapulco pacific mexico destination guide travelogue funjet"],
+ ["dest-mexico", "Funjet Vacations", "Cancun", "https://www.algvtravelogue.com/mexico/fj/fj-mexico-cancun/", "cancun hotel zone yucatan mexico destination guide travelogue funjet"],
+ ["dest-mexico", "Funjet Vacations", "Cozumel", "https://www.algvtravelogue.com/mexico/fj/fj-mexico-cozumel/", "cozumel snorkel diving island mexico destination guide travelogue funjet"],
+ ["dest-mexico", "Funjet Vacations", "Huatulco", "https://www.algvtravelogue.com/mexico/fj/fj-mexico-huatulco/", "huatulco oaxaca pacific mexico destination guide travelogue funjet"],
+ ["dest-mexico", "Funjet Vacations", "Ixtapa/Zihuatanejo", "https://www.algvtravelogue.com/mexico/fj/fj-mexico-ixtapa/", "ixtapa zihuatanejo pacific mexico destination guide travelogue funjet"],
+ ["dest-mexico", "Funjet Vacations", "Los Cabos", "https://www.algvtravelogue.com/mexico/fj/fj-mexico-los-cabos/", "los cabos cabo san lucas san jose baja mexico destination guide travelogue funjet"],
+ ["dest-mexico", "Funjet Vacations", "Mazatlán", "https://www.algvtravelogue.com/mexico/fj/fj-mexico-mazatlan/", "mazatlan pacific mexico destination guide travelogue funjet"],
+ ["dest-mexico", "Funjet Vacations", "Costa/Isla/Playa Mujeres", "https://www.algvtravelogue.com/mexico/fj/fj-mexico-mujeres/", "isla mujeres costa mujeres playa mujeres cancun mexico destination guide travelogue funjet"],
+ ["dest-mexico", "Funjet Vacations", "Puerto Vallarta", "https://www.algvtravelogue.com/mexico/fj/fj-mexico-puerto-vallarta/", "puerto vallarta jalisco pacific mexico destination guide travelogue funjet"],
+ ["dest-mexico", "Funjet Vacations", "Riviera Maya", "https://www.algvtravelogue.com/mexico/fj/fj-mexico-riviera-maya/", "riviera maya tulum playa del carmen mexico destination guide travelogue funjet"],
+ ["dest-mexico", "Funjet Vacations", "Riviera Nayarit", "https://www.algvtravelogue.com/mexico/fj/fj-mexico-riviera-nayarit/", "riviera nayarit nuevo vallarta punta mita mexico destination guide travelogue funjet"],
+ ["dest-mexico", "Funjet Vacations", "San Miguel de Allende", "https://www.algvtravelogue.com/mexico/fj/fj-san-miguel-de-allende/", "san miguel de allende colonial guanajuato mexico destination guide travelogue funjet"],
+ ["dest-caribbean", "Funjet Vacations", "Antigua", "https://www.algvtravelogue.com/caribbean/fj/fj-caribbean-antigua/", "antigua barbuda caribbean destination guide travelogue funjet"],
+ ["dest-caribbean", "Funjet Vacations", "Aruba", "https://www.algvtravelogue.com/caribbean/fj/fj-caribbean-aruba/", "aruba abc islands caribbean destination guide travelogue funjet"],
+ ["dest-caribbean", "Funjet Vacations", "Bahamas", "https://www.algvtravelogue.com/caribbean/fj/fj-caribbean-bahamas/", "bahamas nassau paradise island exumas caribbean destination guide travelogue funjet"],
+ ["dest-caribbean", "Funjet Vacations", "Barbados", "https://www.algvtravelogue.com/caribbean/fj/fj-caribbean-barbados/", "barbados bridgetown caribbean destination guide travelogue funjet"],
+ ["dest-caribbean", "Funjet Vacations", "Curaçao", "https://www.algvtravelogue.com/caribbean/fj/fj-caribbean-curacao/", "curacao willemstad abc islands caribbean destination guide travelogue funjet"],
+ ["dest-caribbean", "Funjet Vacations", "Dominican Republic", "https://www.algvtravelogue.com/caribbean/fj/fj-caribbean-dominican-republic/", "dominican republic punta cana santo domingo la romana altos de chavon caribbean destination guide travelogue funjet"],
+ ["dest-caribbean", "Funjet Vacations", "Grand Cayman", "https://www.algvtravelogue.com/caribbean/fj/fj-caribbean-grand-cayman/", "grand cayman cayman islands seven mile beach caribbean destination guide travelogue funjet"],
+ ["dest-caribbean", "Funjet Vacations", "Grenada", "https://www.algvtravelogue.com/caribbean/fj/fj-caribbean-grenada/", "grenada spice island caribbean destination guide travelogue funjet"],
+ ["dest-caribbean", "Funjet Vacations", "Jamaica", "https://www.algvtravelogue.com/caribbean/fj/fj-caribbean-jamaica/", "jamaica montego bay negril ocho rios caribbean destination guide travelogue funjet"],
+ ["dest-caribbean", "Funjet Vacations", "Puerto Rico", "https://www.algvtravelogue.com/caribbean/fj/fj-caribbean-puerto-rico/", "puerto rico san juan caribbean destination guide travelogue funjet"],
+ ["dest-caribbean", "Funjet Vacations", "Sint Maarten/St. Martin", "https://www.algvtravelogue.com/caribbean/fj/fj-caribbean-st-martin/", "sint maarten st martin saint martin st maarten caribbean destination guide travelogue funjet"],
+ ["dest-caribbean", "Funjet Vacations", "St. Kitts", "https://www.algvtravelogue.com/caribbean/fj/fj-caribbean-st-kitts/", "st kitts saint kitts nevis caribbean destination guide travelogue funjet"],
+ ["dest-caribbean", "Funjet Vacations", "Saint Lucia", "https://www.algvtravelogue.com/caribbean/fj/fj-caribbean-st-lucia/", "saint lucia st lucia pitons caribbean destination guide travelogue funjet"],
+ ["dest-caribbean", "Funjet Vacations", "U.S. Virgin Islands", "https://www.algvtravelogue.com/caribbean/fj/fj-caribbean-usvi/", "us virgin islands usvi st thomas st john st croix caribbean destination guide travelogue funjet"],
+ ["dest-more", "Funjet Vacations", "Central America: Costa Rica & Panama", "https://www.algvtravelogue.com/central-america/fj-central-america/", "central america costa rica panama guanacaste rainforest  destination guide travelogue funjet"],
+ ["dest-more", "Funjet Vacations", "Hawaii", "https://www.algvtravelogue.com/hawaii/fj/fj-hawaii/", "hawaii oahu maui kauai big island honolulu waikiki  destination guide travelogue funjet"],
+ ["dest-more", "Hawaiʻi Visitors & Convention Bureau", "Experience the Hawaiian Islands: Official Visitors' Guide", "https://www.hvcb.org/hawaiivisitorsguide/?page=0", "hawaii kauai oahu molokai lanai maui big island honolulu waikiki statewide visitors guide  destination guide"],
+ ["dest-pacific", "Cook Islands Tourism", "Cook Islands", "https://brochure.cookislands.travel/cook_islands/", "cook islands rarotonga aitutaki south pacific destination guide"],
+ ["dest-pacific", "ANZCRO", "The New Zealand Book 2026–2027", "https://issuu.com/holidayexperts/docs/new_zealand_book_26_27_north_america_?fr=sYzAxZjg0OTg3MzA", "new zealand auckland queenstown milford sound south pacific destination guide"],
+ ["dest-pacific", "Tahiti Tourisme", "The Islands of Tahiti", "https://www.calameo.com/read/0034615037e4814026be9", "tahiti french polynesia bora bora moorea society islands south pacific destination guide"],
+ ["disney","Adventures by Disney","2027 Destination Guide","brochures/adventures-by-disney-2027.pdf","disney family kids guided worldwide"],
+ ["disney", "Disneyland Resort", "Disneyland Resort", "https://read.nxtbook.com/disneyland_resort/brochure/wdtc/disneyland_resort.html", "disneyland california anaheim mickey"],
+ ["disney", "Walt Disney World Resort", "Walt Disney World Resort", "https://read.nxtbook.com/walt_disney_world/digital_brochure/wdw_resort_digital_brochure/walt_disney_world_resort.html", "orlando florida magic kingdom mickey"],
+["weddings", "Funjet Vacations", "Weddings: Mexico", "brochures/funjet-weddings-mexico.pdf", "wedding honeymoon vow renewal destination wedding cancun riviera maya los cabos puerto vallarta all inclusive funjet"],
+["weddings", "Funjet Vacations", "Weddings: Caribbean", "brochures/funjet-weddings-caribbean.pdf", "wedding honeymoon vow renewal destination wedding jamaica punta cana dominican republic aruba all inclusive funjet"],
+["weddings", "Funjet Vacations", "Weddings: Central America", "brochures/funjet-weddings-central-america.pdf", "wedding honeymoon vow renewal destination wedding costa rica panama belize honduras roatan all inclusive funjet"],
+["weddings", "Funjet Vacations", "Groups: Mexico", "brochures/funjet-groups-mexico.pdf", "group getaway family reunion girls trip birthday celebration cancun riviera maya los cabos puerto vallarta all inclusive funjet"],
+["weddings", "Funjet Vacations", "Groups: Caribbean", "brochures/funjet-groups-caribbean.pdf", "group getaway family reunion girls trip birthday celebration jamaica punta cana dominican republic aruba all inclusive funjet"],
+["weddings", "Funjet Vacations", "Groups: Central America", "brochures/funjet-groups-central-america.pdf", "group getaway family reunion girls trip birthday celebration costa rica panama belize honduras roatan all inclusive funjet"],
+].map(([s,v,t,u,k])=>({s,v,t,u,k}));
+
+const fmt=u=>/\.pdf($|\?)/i.test(u)?"PDF":"Flipbook";
+const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const coverFor=b=>COVERS[b.v+"|"+b.t]||COVERS[b.v+"|"+b.t.replace("Grand Voyages 2027","2027 Grand Voyages")]||COVERS[b.v+"|"+(b.v==="Cunard"?"Cunard":b.t)];
+
+let active="all";
+const tabs=document.getElementById("tabs");
+[{id:"all",name:"All"},...SHELVES.filter(s=>!s.g),{id:"dest",name:"Destination Guides"}].forEach(s=>{
+  const b=document.createElement("button");b.type="button";b.className="tab";b.id="tab-"+s.id;b.textContent=s.name;
+  b.onclick=()=>{active=s.id;q.value="";render()};tabs.appendChild(b);
+});
+const q=document.getElementById("q");q.addEventListener("input",render);
+
+function slot(b){
+  const img=coverFor(b);
+  const cover=img
+    ? `<span class="cover"><img src="${img}" alt="" loading="lazy"></span>`
+    : `<span class="cover ph"><span class="v">${esc(b.v)}</span><span class="t">${esc(b.t)}</span><span class="b">Brochure · ${fmt(b.u)}</span></span>`;
+  return `<a class="slot" href="${esc(b.u)}" target="_blank" rel="noopener" aria-label="${esc(b.v)}: ${esc(b.t)}, ${fmt(b.u)}, opens in a new tab">
+    <span class="stand">${cover}</span><span class="ledge"></span>
+    <span class="meta"><span class="vn" style="display:block">${esc(b.v)}</span><span class="tn">${esc(b.t)}</span></span></a>`;
+}
+function render(){
+  const term=q.value.trim().toLowerCase();
+  document.querySelectorAll(".tab").forEach(t=>t.setAttribute("aria-pressed",String(!term&&t.id==="tab-"+active)));
+  let total=0;
+  const html=SHELVES.filter(s=>term||active==="all"||s.id===active||s.g===active).map(s=>{
+    const items=B.filter(b=>b.s===s.id&&(!term||[b.v,b.t,b.k,s.name].join(" ").toLowerCase().includes(term)));
+    if(!items.length)return""; total+=items.length;
+    const [w1,...rest]=s.name.split(" ");
+    return `<section class="shelf" aria-labelledby="h-${s.id}">
+      <div class="shelf-head"><h2 id="h-${s.id}">${w1} <span>${rest.join(" ")}</span></h2>
+        <div class="head-right"><span class="count">${items.length} brochure${items.length>1?"s":""}</span>
+        <div class="arrows"><button type="button" aria-label="Scroll ${s.name} left" data-dir="-1" data-t="t-${s.id}">‹</button><button type="button" aria-label="Scroll ${s.name} right" data-dir="1" data-t="t-${s.id}">›</button></div></div></div>
+      <div class="track" id="t-${s.id}">${items.map(slot).join("")}<span class="slot fill" aria-hidden="true"><span class="stand"></span><span class="ledge"></span></span></div>
+    </section>`;
+  }).join("");
+  document.getElementById("shelves").innerHTML=html;
+  document.getElementById("empty").hidden=total>0;
+  document.querySelectorAll(".arrows button").forEach(btn=>btn.onclick=()=>{
+    const t=document.getElementById(btn.dataset.t);t.scrollBy({left:btn.dataset.dir*t.clientWidth*.8,behavior:"smooth"});
+  });
+}
+render();
+</script>
